@@ -42,6 +42,11 @@ public class Student extends Person implements Learner{
     }
 
     @Override
+    public void takeExam(String subject) {
+        System.out.println(this.getName() + " is taking an exam in " + subject);
+    }
+
+    @Override
     public String toString() {
         return "Student{" +
                 "name= '" + this.getName() + '\'' +

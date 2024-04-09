@@ -118,24 +118,8 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
-
-        /**Read from that file
-        try {
-            File read = new File("studentrecords.txt");
-            Scanner sc = new Scanner(read);
-            while(sc.hasNextLine()) {
-                String data = sc.nextLine();
-                System.out.println(data);
-            }
-            sc.close();
-        } catch(FileNotFoundException e) {
-            System.out.println("An error occured");
-            e.printStackTrace();
-        }
-         **/
-
+        DistanceLearner distanceLearner = new DistanceLearner("Noah", 45,"purple","78995", "Business");
+        distanceLearner.introduceSelf();
 
 
     }
