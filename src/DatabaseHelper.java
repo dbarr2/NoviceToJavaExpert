@@ -73,10 +73,7 @@ public class DatabaseHelper {
         return students;
     }
 
-    public static void setSSLProtocol() {
-        System.setProperty("https.protocols", "TLSv1.2");
-        System.setProperty("https.cipherSuites", "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384");
-    }
+    
 
 
 }
