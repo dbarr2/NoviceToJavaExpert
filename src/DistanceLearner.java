@@ -1,8 +1,8 @@
 public class DistanceLearner extends OnlineStudent{
 
 
-    public DistanceLearner(String name, int age, String favColor, String studentID, String major) throws InvalidStudentException {
-        super(name, age, favColor, studentID, major);
+    public DistanceLearner(String name, int age, int studentID, String major) throws InvalidStudentException {
+        super(name, age, studentID, major);
     }
 
     @Override

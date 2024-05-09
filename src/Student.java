@@ -1,11 +1,11 @@
 public class Student extends Person implements Learner{
 
-    private String studentId;
+    private int studentId;
     private String major;
 
-    public Student(String name, int age, String favColor, String studentID, String major) throws  InvalidStudentException {
-        super(name, age, favColor);
-        if(name == null || age < 0 || favColor == null) {
+    public Student(String name, int age, int studentID, String major) throws  InvalidStudentException {
+        super(name, age);
+        if(name == null || age < 0) {
             throw new InvalidStudentException("Invalid input: Name cannot be null; age cannot be less than 0; Favorite " +
                     "color can not be null");
         }
@@ -13,7 +13,7 @@ public class Student extends Person implements Learner{
         this.major = major;
     }
 
-    public String getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
@@ -21,7 +21,7 @@ public class Student extends Person implements Learner{
         return major;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
 
@@ -32,7 +32,7 @@ public class Student extends Person implements Learner{
     @Override
     public void introduceSelf() {
         System.out.println("Hello my name is " + this.getName() + ". I am " + this.getAge() + " years old " +
-                "and my favorite color is " + this.getFavoriteColor() + ". My student ID is " + getStudentId() +
+                ". My student ID is " + getStudentId() +
                 ". My major is " + getMajor());
     }
 
@@ -53,7 +53,6 @@ public class Student extends Person implements Learner{
                 "studentId='" + studentId + '\'' +
                 ", major='" + major + '\'' +
                 ", age='" + this.getAge() + '\'' +
-                ", favoriteColor='" + this.getFavoriteColor() + '\'' +
                 '}';
     }
 }

@@ -2,31 +2,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.sql.SQLException;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws InvalidStudentException {
 
-        Person newMe = new Person("Deangelo", 25, "red");
+        Person newMe = new Person("Deangelo", 25);
 
         newMe.celebrateBirthday();
         newMe.introduceSelf();
 
-        Student student1 = new Student("John" , 24, "blue", "33432", "Com Sci");
+        Student student1 = new Student("John" , 24, 33432, "Com Sci");
         student1.introduceSelf();
         student1.study();
         student1.celebrateBirthday();
         student1.introduceSelf();
 
         ArrayList<Student> people = new ArrayList<>();
-        Student studentA = new Student("Jessy" , 23, "purple", "9993", "Communications");
-        Student studentB = new Student("Jacob" , 56, "indigo", "8578", "Business");
-        Student studentC = new Student("Han" , 19, "teal", "6758", "Art");
-        Student studentD = new Student("Patty" , 40, "burgundy", "7741", "History");
+        Student studentA = new Student("Jessy" , 23, 9993, "Communications");
+        Student studentB = new Student("Jacob" , 56,8578, "Business");
+        Student studentC = new Student("Han" , 19, 6758, "Art");
+        Student studentD = new Student("Patty" , 40,  7741, "History");
 
         people.add(studentA);
         people.add(studentB);
@@ -83,7 +81,7 @@ public class Main {
 
         //Test using the custom exception handling class
         try {
-            Student mike = new Student("", -1, "red", "78959", "Com Sci");
+            Student mike = new Student("", -1,78959, "Com Sci");
         } catch (InvalidStudentException e) {
             System.out.println(e);
         }
@@ -118,9 +116,31 @@ public class Main {
             e.printStackTrace();
         }
 
-        DistanceLearner distanceLearner = new DistanceLearner("Noah", 45,"purple","78995", "Business");
+        DistanceLearner distanceLearner = new DistanceLearner("Noah", 45,78995, "Business");
         distanceLearner.introduceSelf();
 
+
+        //Create a connection to the sql database
+        DatabaseHelper db = new DatabaseHelper("jdbc:mysql://127.0.0.1:3306/studentrepository?useSSL=false&characterEncoding=UTF-8", "name", "password");
+        System.out.println(db.toString());
+        /**try {
+            db.getConnection();
+            db.insertStudent(1,"Daniel", 22, "Computer Science");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+         **/
+
+        try {
+            List<Student> allStudents = db.fetchAllStudents();
+
+            for(Student item : allStudents) {
+                System.out.println(item.getAge());
+                System.out.println(item.getName());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
