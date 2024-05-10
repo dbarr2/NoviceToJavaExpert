@@ -14,17 +14,17 @@ public class Main {
         newMe.celebrateBirthday();
         newMe.introduceSelf();
 
-        Student student1 = new Student("John" , 24, 33432, "Com Sci");
+        Student student1 = new Student("John" , 24,"Com Sci");
         student1.introduceSelf();
         student1.study();
         student1.celebrateBirthday();
         student1.introduceSelf();
 
         ArrayList<Student> people = new ArrayList<>();
-        Student studentA = new Student("Jessy" , 23, 9993, "Communications");
-        Student studentB = new Student("Jacob" , 56,8578, "Business");
-        Student studentC = new Student("Han" , 19, 6758, "Art");
-        Student studentD = new Student("Patty" , 40,  7741, "History");
+        Student studentA = new Student("Jessy" , 23,"Communications");
+        Student studentB = new Student("Jacob" , 56,"Business");
+        Student studentC = new Student("Han" , 19,"Art");
+        Student studentD = new Student("Patty" , 40,"History");
 
         people.add(studentA);
         people.add(studentB);
@@ -81,7 +81,7 @@ public class Main {
 
         //Test using the custom exception handling class
         try {
-            Student mike = new Student("", -1,78959, "Com Sci");
+            Student mike = new Student("", 22, "Com Sci");
         } catch (InvalidStudentException e) {
             System.out.println(e);
         }
@@ -116,28 +116,34 @@ public class Main {
             e.printStackTrace();
         }
 
-        DistanceLearner distanceLearner = new DistanceLearner("Noah", 45,78995, "Business");
+        DistanceLearner distanceLearner = new DistanceLearner("Noah", 45,"Business");
         distanceLearner.introduceSelf();
 
 
         //Create a connection to the sql database
-        DatabaseHelper db = new DatabaseHelper("jdbc:mysql://127.0.0.1:3306/studentrepository?useSSL=false&characterEncoding=UTF-8", "name", "password");
+        DatabaseHelper db = new DatabaseHelper("jdbc:mysql://127.0.0.1:3306/studentrepository?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true", "user", "pw");
         System.out.println(db.toString());
-        /**try {
+        try {
             db.getConnection();
-            db.insertStudent(1,"Daniel", 22, "Computer Science");
+            //db.insertStudent(1,"Daniel", 22, "Computer Science");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-         **/
 
-        try {
+       /**try {
             List<Student> allStudents = db.fetchAllStudents();
 
             for(Student item : allStudents) {
                 System.out.println(item.getAge());
                 System.out.println(item.getName());
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        **/
+
+        try {
+            db.processMultipleTransactions(people);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

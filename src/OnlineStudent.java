@@ -1,9 +1,9 @@
 abstract class OnlineStudent extends Student{
 
 
-    public OnlineStudent(String name, int age, int studentID, String major)
+    public OnlineStudent(String name, int age, String major)
             throws InvalidStudentException {
-        super(name, age, studentID, major);
+        super(name, age, major);
     }
 
     @Override

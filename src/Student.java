@@ -3,26 +3,17 @@ public class Student extends Person implements Learner{
     private int studentId;
     private String major;
 
-    public Student(String name, int age, int studentID, String major) throws  InvalidStudentException {
+    public Student(String name, int age, String major) throws  InvalidStudentException {
         super(name, age);
         if(name == null || age < 0) {
             throw new InvalidStudentException("Invalid input: Name cannot be null; age cannot be less than 0; Favorite " +
                     "color can not be null");
         }
-        this.studentId = studentID;
         this.major = major;
-    }
-
-    public int getStudentId() {
-        return studentId;
     }
 
     public String getMajor() {
         return major;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
     }
 
     public void setMajor(String major) {
@@ -32,7 +23,6 @@ public class Student extends Person implements Learner{
     @Override
     public void introduceSelf() {
         System.out.println("Hello my name is " + this.getName() + ". I am " + this.getAge() + " years old " +
-                ". My student ID is " + getStudentId() +
                 ". My major is " + getMajor());
     }
 
@@ -50,7 +40,6 @@ public class Student extends Person implements Learner{
     public String toString() {
         return "Student{" +
                 "name= '" + this.getName() + '\'' +
-                "studentId='" + studentId + '\'' +
                 ", major='" + major + '\'' +
                 ", age='" + this.getAge() + '\'' +
                 '}';

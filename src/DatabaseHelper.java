@@ -61,7 +61,7 @@ public class DatabaseHelper {
                 String major = rs.getString("major");
 
                 //Create a new Student object and add it to the list
-                Student student = new Student(studentName, age, studentId, major);
+                Student student = new Student(studentName, age, major);
                 students.add(student);
             }
         } catch (InvalidStudentException e) {
@@ -72,6 +72,44 @@ public class DatabaseHelper {
         con.close(); //close connection
         return students;
     }
+
+    public void processMultipleTransactions(List<Student> students) throws SQLException {
+
+        try (Connection con = DriverManager.getConnection(this.jdbcURL, this.username, this.password)) {
+            //Set transaction isolation level
+            con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+
+            con.setAutoCommit(false); //Disable autocommit mode -- will not commit changes after a query until commit
+            try {
+                String sql = "INSERT INTO students (student_name, age, major) VALUES (?, ?, ?)";
+                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                    for(Student student : students) {
+                        pstmt.setString(1, student.getName());
+                        pstmt.setInt(2, student.getAge());
+                        pstmt.setString(3, student.getMajor());
+                        pstmt.executeUpdate();
+                    }
+                    con.commit(); //commit all changes in a single transaction
+                } catch (SQLException e) {
+                    con.rollback(); //Roll back the changes if there is an error after the transaction
+                    throw e;
+                }
+                } finally {
+                    con.setAutoCommit(true); // restore auto-commit node
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+    }
+
+
 
     
 
